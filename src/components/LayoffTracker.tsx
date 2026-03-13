@@ -5,6 +5,7 @@ import { layoffs as allLayoffs, VIBES, type Layoff, type VibeKey } from "@/lib/d
 import DoomCounter from "./DoomCounter";
 import Ticker from "./Ticker";
 import LayoffTable from "./LayoffTable";
+import SponsorBanner from "./SponsorBanner";
 
 type SortKey = "date" | "count" | "pct" | "company";
 type SortDir = "asc" | "desc";
@@ -113,6 +114,9 @@ export default function LayoffTracker({ initialData }: Props) {
         companies={companiesHit}
         biggest={biggestSingle}
       />
+
+      {/* ── SPONSOR ── */}
+      <SponsorBanner />
 
       {/* ── TICKER ── */}
       <Ticker layoffs={initialData} />
