@@ -1,26 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #08080f;
+  --surface: #0f0f1a;
+  --surface2: #161624;
+  --border: #1e1e30;
+  --accent: #ff3b3b;
+  --accent2: #ff8c00;
+  --accent3: #a855f7;
+  --text: #dddde8;
+  --muted: #55556a;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
 }
+
+/* scanlines overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Bebas Neue utility */
+.font-bebas {
+  font-family: "Bebas Neue", sans-serif;
+}
+
+.font-mono-custom {
+  font-family: "Space Mono", monospace;
+}
+
+/* Ticker animation */
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-inner {
+  animation: ticker 35s linear infinite;
+  display: flex;
+  width: max-content;
+}
+
+.ticker-inner:hover {
+  animation-play-state: paused;
+}
+
+/* Row entrance */
+@keyframes rowIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.row-animate {
+  animation: rowIn 0.2s ease both;
+}
+
+/* Count-up pop */
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.85) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.pop-in {
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Glitch flicker for the big title */
+@keyframes glitch {
+  0%, 94%, 100% { clip-path: none; transform: none; }
+  95% { clip-path: polygon(0 10%, 100% 10%, 100% 40%, 0 40%); transform: translate(-3px, 2px); }
+  97% { clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); transform: translate(3px, -2px); }
+}
+
+.glitch {
+  animation: glitch 6s step-end infinite;
+}
+
+/* Blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+
+.blink {
+  animation: blink 1.8s step-end infinite;
+}
+
+/* Doom number glow pulse */
+@keyframes glow-pulse {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(255,59,59,0.5)); }
+  50%       { filter: drop-shadow(0 0 20px rgba(255,59,59,0.9)); }
+}
+
+.glow-red   { animation: glow-pulse 3s ease-in-out infinite; }
+
+@keyframes glow-pulse-purple {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(168,85,247,0.5)); }
+  50%       { filter: drop-shadow(0 0 20px rgba(168,85,247,0.9)); }
+}
+
+.glow-purple { animation: glow-pulse-purple 3s ease-in-out infinite; }
+
+@keyframes glow-pulse-orange {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(255,140,0,0.5)); }
+  50%       { filter: drop-shadow(0 0 20px rgba(255,140,0,0.9)); }
+}
+
+.glow-orange { animation: glow-pulse-orange 3s ease-in-out infinite; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
